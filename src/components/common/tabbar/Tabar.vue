@@ -1,6 +1,6 @@
 <template>
 <div class="TabBox">
-    <slot></slot>
+    <slot class="ImgSIze"></slot>
 </div>
 </template>
 <script>
@@ -24,10 +24,7 @@ export default {
         position: fixed;
         bottom: 0;
         /* align-items: center; */
+        text-align:center;
         width: 100%;
-    }
-    .tabItem{
-        text-align: center;
-        flex: 1;
     }
 </style>
