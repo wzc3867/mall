@@ -1,4 +1,7 @@
 <template>
+  <div class="tabItem">
+      <slot></slot>
+  </div>
 </template>
 <script>
 export default {
@@ -9,5 +12,9 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="less" scoped>
+  .tabItem{
+    flex:1;
+    text-align:center;
+  }
 </style>
