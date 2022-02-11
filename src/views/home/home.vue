@@ -1,24 +1,55 @@
 <!--  -->
 <template>
   <div>
-      <h1>首页</h1>
+      <MainSwiper :swiperimg="bannerImg"></MainSwiper>
   </div>
 </template>
 
 <script>
+import MainSwiper from '../../components/content/Swiper/MainSwiper.vue'
+import { getHomeData,getHomeMultipleData } from '../../network/home';
 export default {
+  created() {
+    // 请求多条数据回来
+    this.getHomeMultiple();
+  },
   data () {
     return {
+        goodsList: {
+          'pop': {page: 1, list: []},
+          'new': {page: 1, list: []},
+          'sell': {page: 1, list: []}
+        },
+        banner:[],
+        recommend:{}
     };
   },
 
-  components: {},
+  components: {
+    MainSwiper
+  },
 
-  computed: {},
+  computed: {
+    bannerImg(){
+      return this.banner
+    }
+  },
 
-
-
-  methods: {}
+  methods: {
+    getHomeData(type, page) {
+      getHomeData(type, page).then(res => {
+        console.log(res);
+        return res;
+      })
+    },
+    getHomeMultiple(){
+      getHomeMultipleData().then(res => {
+        console.log(res);
+        this.banner = res.data.data.banner.list;
+        this.recommend = res.data.data.recommend.list;
+      })
+    }
+  }
 }
 
 </script>
