@@ -1,8 +1,7 @@
 <!--  -->
 <template>
   <div>
-      <Swiper></Swiper>
-      <div>{{swiperimg}}</div>
+      <Swiper :imgswip="swiperimg"></Swiper>
   </div>
 </template>
 
@@ -13,6 +12,9 @@ export default {
     swiperimg:{
       required:true
     }
+  },
+  created() {
+  
   },
   data () {
     return {
