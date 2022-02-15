@@ -62,18 +62,29 @@ export default {
     },
     changemove(){
       const curLocation = -this.totalWidth*this.currentIndex;
-      this.changAmin().then(() =>{
-          console.log(this.currentIndex);
-          if(this.currentIndex >= this.$refs.swipers.length) {
-           this.currentIndex = 1;
-         }
-       });
+      // 滑动动画
+       this.changAmin();
+      //  滑动的位置
        this.setTransform(curLocation);
+      //  检查滑动的位置
+      this.checkLoacation()
     },
-    changAmin(){
-      return new Promise(()=>{
+      changAmin(){
+      return new Promise((resolve)=>{
           this.swiperStyle.transition = "all 1s ease";
+          resolve()
       })
+    },
+    checkLoacation(){
+      setTimeout(()=>{
+        // 1.校验正确的位置
+          this.swiperStyle.transition = '0ms';
+          if(this.currentIndex >= this.$refs.swipers.length+1) {
+            this.currentIndex =1;
+            this.setTransform(-this.currentIndex*this.totalWidth)
+          }
+          // this.$emit('transitionEnd',this.currentIndex-1)     
+      },1000)
     }
   }
 }
