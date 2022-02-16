@@ -7,7 +7,7 @@
    <!-- 指示点渲染 -->
   <div class="indicatorBox">
     <ul class="indicator">
-      <li :class="[[index+1==currentIndex?ISactive:'']]"  v-for="(item, index) in imgswip" :key="index" ref="sw"></li>
+      <li :class="[[index==indicatorIndex-1?ISactive:'']]"  v-for="(item, index) in imgswip" :key="index" ref="sw"></li>
     </ul>
   </div>
   </div>
@@ -31,7 +31,8 @@ export default {
     return {
       currentIndex:1,
       swiperStyle:{},
-      totalWidth:0
+      totalWidth:0,
+      indicatorIndex:1
     };
   },
   components: {},
@@ -54,6 +55,7 @@ export default {
     staatTime(){
       setInterval(() => {
         this.currentIndex++;
+        this.indicatorIndex++;
         this.changemove();
       }, 3000);
     },
@@ -84,9 +86,12 @@ export default {
       this.checkLoacation()
     },
       changAmin(){
-      this.swiperStyle.transition = "all 1s ease";
+      this.swiperStyle.transition = "1s";
     },
     checkLoacation(){
+      if(this.indicatorIndex >=this.$refs.swipers.length+1) {
+        this.indicatorIndex =1;
+      }
       setTimeout(()=>{
         // 1.校验正确的位置
           this.swiperStyle.transition = '0ms';
@@ -105,12 +110,14 @@ export default {
 .Contain{
   display:flex;
   position: relative;
+  overflow:hidden;
 }
 .swiper-box{
   .pxToVW(375);
   .pxToVW(195, height);
     display:flex;
     position: relative;
+    // overflow: hidden;
 }
 .indicator{
   display:flex;
