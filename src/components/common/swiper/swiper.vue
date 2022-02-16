@@ -1,8 +1,14 @@
 <!--  -->
 <template>
-  <div style="overflow: hidden;">
+  <div class="Contain">
     <div class="swiper-box" ref="swiperBox">
     <img :src="item.image" v-for="(item, index) in imgswip" :key="index" ref="swipers" >
+  </div>
+   <!-- 指示点渲染 -->
+  <div class="indicatorBox">
+    <ul class="indicator">
+      <li :class="[[index+1==currentIndex?ISactive:'']]"  v-for="(item, index) in imgswip" :key="index" ref="sw"></li>
+    </ul>
   </div>
   </div>
 </template>
@@ -33,6 +39,14 @@ export default {
   computed: {
     move(){
       return 'transform:translateX('+this.currentIndex*-375+'px';
+    },
+    // 判断是否为当前类名
+    ISactive(){
+      try{
+      return 'activeColor'
+      } catch(e) {
+        console.log(e);
+      }
     }
   },
 
@@ -70,10 +84,7 @@ export default {
       this.checkLoacation()
     },
       changAmin(){
-      return new Promise((resolve)=>{
-          this.swiperStyle.transition = "all 1s ease";
-          resolve()
-      })
+      this.swiperStyle.transition = "all 1s ease";
     },
     checkLoacation(){
       setTimeout(()=>{
@@ -83,7 +94,7 @@ export default {
             this.currentIndex =1;
             this.setTransform(-this.currentIndex*this.totalWidth)
           }
-          // this.$emit('transitionEnd',this.currentIndex-1)     
+          // this.$emit('transitionEnd',this.currentIndex-1)
       },1000)
     }
   }
@@ -91,10 +102,38 @@ export default {
 
 </script>
 <style lang='less' scoped>
+.Contain{
+  display:flex;
+  position: relative;
+}
 .swiper-box{
   .pxToVW(375);
   .pxToVW(195, height);
     display:flex;
-    
+    position: relative;
+}
+.indicator{
+  display:flex;
+}
+.indicator li{
+  .pxToVW(10);
+  .pxToVW(10,height);
+  border-radius: 2vw;
+  background-color:#fff;
+  margin-left: 1vw;
+  list-style: none;
+}
+.indicatorBox{
+  position: absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:1.5vw;
+}
+ul{
+  padding:0px;
+  margin:0px;
+}
+.activeColor{
+  background-color: rgba(212,62,46,1.0)!important;
 }
 </style>
