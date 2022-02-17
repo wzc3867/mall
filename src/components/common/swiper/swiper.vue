@@ -7,7 +7,7 @@
    <!-- 指示点渲染 -->
   <div class="indicatorBox">
     <ul class="indicator">
-      <li :class="[[index==indicatorIndex-1?ISactive:'']]"  v-for="(item, index) in imgswip" :key="index" ref="sw"></li>
+      <li :class="[[index==indicatorIndex-1?ISactive:'']]"  v-for="(item, index) in imgswip" :key="index" ref="sw" @click="changeImg(index)"></li>
     </ul>
   </div>
   </div>
@@ -32,7 +32,8 @@ export default {
       currentIndex:1,
       swiperStyle:{},
       totalWidth:0,
-      indicatorIndex:1
+      indicatorIndex:1,
+      Timer:''
     };
   },
   components: {},
@@ -53,7 +54,7 @@ export default {
 
   methods: {
     staatTime(){
-      setInterval(() => {
+      this.Timer=setInterval(() => {
         this.currentIndex++;
         this.indicatorIndex++;
         this.changemove();
@@ -88,19 +89,60 @@ export default {
       changAmin(){
       this.swiperStyle.transition = "1s";
     },
+    // 检查轮播图的位置
     checkLoacation(){
       if(this.indicatorIndex >=this.$refs.swipers.length+1) {
         this.indicatorIndex =1;
       }
-      setTimeout(()=>{
-        // 1.校验正确的位置
-          this.swiperStyle.transition = '0ms';
-          if(this.currentIndex >= this.$refs.swipers.length+1) {
-            this.currentIndex =1;
-            this.setTransform(-this.currentIndex*this.totalWidth)
+      // setTimeout(()=>{
+      //   // 1.校验正确的位置
+      //     this.swiperStyle.transition = '0ms';
+      //     if(this.currentIndex >= this.$refs.swipers.length+1) {
+      //       this.currentIndex =1;
+      //       this.setTransform(-this.currentIndex*this.totalWidth)
+      //     }
+      //     // this.$emit('transitionEnd',this.currentIndex-1)
+      // },1200)
+      const that = this;
+       this.$refs.swiperBox.addEventListener('transitionend',function(){
+             // 1.校验正确的位置
+          that.swiperStyle.transition = '0ms';
+          if(that.currentIndex >= that.$refs.swipers.length+1) {
+            that.currentIndex =1;
+            that.setTransform(-that.currentIndex*that.totalWidth)
           }
-          // this.$emit('transitionEnd',this.currentIndex-1)
-      },1000)
+        })
+    },
+    changeImg(index){
+       clearInterval(this.Timer);
+      let position = 0
+      let num = index +1;
+      // console.log(num);
+      // console.log('cur1***',this.currentIndex);
+    
+      if(num == 1 && this.currentIndex == this.$refs.swipers.length){
+        this.currentIndex++;
+        position =- (this.currentIndex * this.totalWidth);
+        const that = this;
+         that.changAmin();
+         that.setTransform(position);
+        that.checkLoacation();
+        that.indicatorIndex = 1;
+        this.staatTime();
+        return;
+      } else {
+         this.$refs.swiperBox.addEventListener('transitionend',function(){
+            console.log(3);
+        })
+        position = -(num*this.totalWidth);
+      }
+      // console.log(position);
+      this.indicatorIndex = num;
+      this.currentIndex = num;
+     
+      this.changAmin();
+      this.setTransform(position);
+      this.staatTime();
     }
   }
 }
@@ -127,7 +169,7 @@ export default {
   .pxToVW(10,height);
   border-radius: 2vw;
   background-color:#fff;
-  margin-left: 1vw;
+  margin-left: 1.5vw;
   list-style: none;
 }
 .indicatorBox{
