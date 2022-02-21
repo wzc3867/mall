@@ -7,7 +7,7 @@
    <!-- 指示点渲染 -->
   <div class="indicatorBox">
     <ul class="indicator">
-      <li :class="[[index==indicatorIndex-1?ISactive:'']]"  v-for="(item, index) in imgswip" :key="index" ref="sw" @click="changeImg(index)"></li>
+      <li :class="[[index==currentIndex-1?ISactive:'']]"  v-for="(item, index) in imgswip" :key="index" ref="sw" @click="changeImg(index)"></li>
     </ul>
   </div>
   </div>

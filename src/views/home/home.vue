@@ -2,11 +2,13 @@
 <template>
   <div>
       <MainSwiper :swiperimg="bannerImg"></MainSwiper>
+      <recommend :recomimg="recommend"></recommend>
   </div>
 </template>
 
 <script>
 import MainSwiper from '../../components/content/Swiper/MainSwiper.vue'
+import recommend from '../../views/home/childrenCom/RecommendVIew.vue'
 import { getHomeData,getHomeMultipleData } from '../../network/home';
 export default {
   created() {
@@ -26,7 +28,8 @@ export default {
   },
 
   components: {
-    MainSwiper
+    MainSwiper,
+    recommend
   },
 
   computed: {
