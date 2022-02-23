@@ -7,7 +7,7 @@
    <!-- 指示点渲染 -->
   <div class="indicatorBox">
     <ul class="indicator">
-      <li :class="[[index==currentIndex-1?ISactive:'']]"  v-for="(item, index) in imgswip" :key="index" ref="sw" @click="changeImg(index)"></li>
+      <li :class="[[index==indicatorIndex-1?ISactive:'']]"  v-for="(item, index) in imgswip" :key="index" ref="sw" @click="changeImg(index)"></li>
     </ul>
   </div>
   </div>
@@ -83,7 +83,7 @@ export default {
     },
     //轮播移动的方法
     changemove(){
-      this.Scrolling = true;
+      // this.Scrolling = true;
       // console.log('scroll'+this.Scrolling);
       const curLocation = -this.totalWidth*this.currentIndex;
       // 滑动动画
@@ -97,6 +97,7 @@ export default {
     },
     //轮播移动的动画
     changAmin(){
+      this.Scrolling= true;
       this.swiperStyle.transition = "1s";
     },
     // 检查轮播图的位置
@@ -107,33 +108,40 @@ export default {
       } else if(this.indicatorIndex == 0){
         this.indicatorIndex =4
       }
-      // setTimeout(()=>{
-      //   // 1.校验正确的位置
-      //     this.swiperStyle.transition = '0ms';
-      //     if(this.currentIndex >= this.$refs.swipers.length+1) {
-      //       this.currentIndex =1;
-      //       this.setTransform(-this.currentIndex*this.totalWidth)
-      //     }
-      //     // this.$emit('transitionEnd',this.currentIndex-1)
-      // },1200)
-      //保存VUE指向
-       const that = this;
-       //等待轮播过度动画完成来判断是否为最后一张图片或者第一张图片，如果是则立刻变动位置
-       this.$refs.swiperBox.addEventListener('transitionend',function(){
-          that.Scrolling = false
+      setTimeout(()=>{
+        // 1.校验正确的位置
+          this.Scrolling = false
           // console.log('111'+that.Scrolling);
              // 1.校验正确的位置
-          that.swiperStyle.transition = '0ms';
-          if(that.currentIndex >= that.$refs.swipers.length+1) {
-            that.currentIndex =1;
-            that.setTransform(-that.currentIndex*that.totalWidth)
-          } else if(that.currentIndex == 0 && that.indicatorIndex == 4) {
+          this.swiperStyle.transition = '0ms';
+          if(this.currentIndex >= this.$refs.swipers.length+1) {
+            this.currentIndex =1;
+            this.setTransform(-this.currentIndex*this.totalWidth)
+          } else if(this.currentIndex == 0 && this.indicatorIndex == 4) {
             // console.log(22);
-            that.currentIndex = that.$refs.swipers.length;
-            that.setTransform(-that.currentIndex*that.totalWidth)
+            this.currentIndex =this.$refs.swipers.length;
+            this.setTransform(-this.currentIndex*this.totalWidth)
           }
-          //  console.log('222'+that.Scrolling);
-        })
+          // this.$emit('transitionEnd',this.currentIndex-1)
+      },1200)
+      //保存VUE指向
+      //  const that = this;
+       //等待轮播过度动画完成来判断是否为最后一张图片或者第一张图片，如果是则立刻变动位置，如果页面缩小了他则监听不到
+      //  this.$refs.swiperBox.addEventListener('transitionend',function(){
+      //     that.Scrolling = false
+      //     // console.log('111'+that.Scrolling);
+      //        // 1.校验正确的位置
+      //     that.swiperStyle.transition = '0ms';
+      //     if(that.currentIndex >= that.$refs.swipers.length+1) {
+      //       that.currentIndex =1;
+      //       that.setTransform(-that.currentIndex*that.totalWidth)
+      //     } else if(that.currentIndex == 0 && that.indicatorIndex == 4) {
+      //       // console.log(22);
+      //       that.currentIndex = that.$refs.swipers.length;
+      //       that.setTransform(-that.currentIndex*that.totalWidth)
+      //     }
+      //     //  console.log('222'+that.Scrolling);
+      //   })
     },
     changeImg(index){
        clearInterval(this.Timer);
@@ -165,29 +173,38 @@ export default {
     TouchStart(e) {
       console.log('4444'+this.Scrolling);
       if(this.Scrolling) {
+        console.log(1);
+        // console.log(123);
         clearInterval(this.Timer);
-        return false;
+        // return false;
+        return;
       } 
-      console.log("我进来了吗？");
       // e.preventDefault();
+      console.log(333);
       clearInterval(this.Timer);
      // 3.保存开始滚动的位置
         this.startX = e.touches[0].pageX;
     },
     TouchMove(e) {
-      //  if(this.Scrolling) {
-      //   return false;
-      // } 
+       if(this.Scrolling) {
+        return false;
+      } 
       this.currentX = e.touches[0].pageX;
       this.distance = this.currentX - this.startX;
       const currloaction = -this.currentIndex*this.totalWidth + this.distance;
       this.setTransform(currloaction);
     },
     TouchEnd(e) {
+      if(this.Scrolling) {
+        this.staatTime();
+        console.log(4);
+        return false;
+      } 
       let movedistance = Math.abs(this.distance);
       if(this.distance == 0) {
         return;
       } else if(this.distance <0 && movedistance > this.totalWidth*this.moveRatio) {
+          console.log(1111);
           this.currentIndex++;
           this.indicatorIndex++;
           console.log(this.Timer);
@@ -196,6 +213,7 @@ export default {
           this.checkLoacation();
           this.staatTime();
       } else if(this.distance >0 && movedistance > this.totalWidth*this.moveRatio) {
+        console.log(2222);
           this.currentIndex--;
           this.indicatorIndex--;
           this.changAmin();
@@ -203,6 +221,7 @@ export default {
           this.checkLoacation();
           this.staatTime();
       } else{
+        console.log(3333);
           this.changAmin();
           this.setTransform(-this.currentIndex*this.totalWidth);
           this.checkLoacation();
