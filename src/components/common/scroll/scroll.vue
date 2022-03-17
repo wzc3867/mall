@@ -68,16 +68,16 @@ export default {
     let img = this.$refs.wrapper.getElementsByTagName("img");
     let count = 0;
     let length = img.length;
-    // if(length) {
-    //   let timer = setInterval(() => {
-    //     if(count == length) {
-    //       this.scroll.refresh();
-    //       clearInterval(timer);
-    //     } else if(img[count].complete) {
-    //       count++;
-    //     }
-    //   },100)
-    // }
+    if(length) {
+      let timer = setInterval(() => {
+        if(count == length) {
+          this.scroll.refresh();
+          clearInterval(timer);
+        } else if(img[count].complete) {
+          count++;
+        }
+      },100)
+    }
   }
 }
 </script>

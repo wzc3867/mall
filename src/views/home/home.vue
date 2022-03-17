@@ -69,7 +69,7 @@ export default {
       // })
       const res = await getHomeData(type, page);
       const index =  this.getType(type);
-      this.goodsList[index].list.push(res.data.data.list);
+      this.goodsList[index].list.push(...res.data.data.list);
       this.displayList = this.goodsList[index].list
       console.log(this.displayList); 
 

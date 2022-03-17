@@ -2,8 +2,10 @@
 <template>
   <div id="goodlist">
       <ul class="ListBox" >
-          <li v-for="(item, index) in GoodData" :key="index">
-            <img src="item.show.img" alt="">
+          <li v-for="(item, index) in GoodData" :key="index" class="imgBox">
+              <!-- {{item}} -->
+            <img :src="item.show.img">
+    
           </li>
       </ul>
   </div>
@@ -39,6 +41,24 @@ export default {
 </script>
 <style lang='less' scoped>
     .ListBox{
-
+        display:flex;
+        flex-wrap: wrap;
+        // height: 300px;
+        // width: 50%;
+        
+    }
+    // image {
+    //     width: 50px;
+    //     height:100px;
+    //     background-color:red
+    // }
+    .imgBox{
+        background-color:red;
+        // height: 100px;
+        width: 50%;
+    }
+    .imgBox img {
+        width: 100%;
+        height: 100%;
     }
 </style>
