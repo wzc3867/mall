@@ -1,7 +1,7 @@
 import serve from './axios'
 
-export async function getHomeData(type, page) {
-    return await serve({
+export function getHomeData(type, page) {
+    return  serve({
         url:"/home/data",
         params:{
             type,

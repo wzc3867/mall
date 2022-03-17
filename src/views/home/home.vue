@@ -7,6 +7,7 @@
         <recommend :recomimg="recommend"></recommend>
         <FeatureView></FeatureView>
         <GoodListNav :NavData="GoodNav"></GoodListNav>
+        <GoodList :GoodData="displayList"></GoodList>
         </div>
       </Scroll>
       <!-- <MainTabBar/> -->
@@ -20,23 +21,29 @@ import recommend from '../../views/home/childrenCom/RecommendVIew.vue'
 import FeatureView from '../../views/home/childrenCom/FeatureView.vue'
 import Scroll from '../../components/common/scroll/scroll.vue'
 import GoodListNav from '../home/childrenCom/GoodListNav.vue'
+import GoodList from '../home/childrenCom/GoodList.vue'
 import { getHomeData,getHomeMultipleData } from '../../network/home';
 export default {
   created() {
     // 请求多条数据回来
     this.getHomeMultiple();
-    // this.getHomeData()
+    // 请求homeBar数据
+    this.getHomeData(this.GoodNavNum[0],this.goodsList[0].page);
   },
   data () {
     return {
-        goodsList: {
-          'pop': {page: 1, list: []},
-          'new': {page: 1, list: []},
-          'sell': {page: 1, list: []}
-        },
+        // goodsList: {
+        //   'pop': {page: 1, list: []},
+        //   'new': {page: 1, list: []},
+        //   'sell': {page: 1, list: []}
+        // },
+        // 0为pop, 1为new, 2为sell
+        goodsList:[{page: 1, list: []},{page: 1, list: []},{page: 1, list: []}],
+        displayList:[],
         banner:[],
         recommend:{},
-        GoodNav:["流行","新款","精选"]
+        GoodNav:["流行","新款","精选"],
+        GoodNavNum:['pop',"new","sell"],
     };
   },
 
@@ -45,7 +52,8 @@ export default {
     recommend,
     FeatureView,
     Scroll,
-    GoodListNav
+    GoodListNav,
+    GoodList
   },
 
   computed: {
@@ -55,18 +63,36 @@ export default {
   },
 
   methods: {
-    getHomeData(type, page) {
-      getHomeData(type, page).then(res => {
-        console.log(res);
-        return res;
-      })
+    async getHomeData(type, page) {
+      // getHomeData(type, page).then(res => {
+      //   this.
+      // })
+      const res = await getHomeData(type, page);
+      const index =  this.getType(type);
+      this.goodsList[index].list.push(res.data.data.list);
+      this.displayList = this.goodsList[index].list
+      console.log(this.displayList); 
+
     },
     getHomeMultiple(){
       getHomeMultipleData().then(res => {
-        console.log(res);
+        // console.log(res);
         this.banner = res.data.data.banner.list;
         this.recommend = res.data.data.recommend.list;
       })
+    },
+    getType(type){
+      switch(type){
+        case 'pop':
+          return 0;
+          break;
+        case 'new:':
+          return 1;
+          break;
+        case 'sell':
+          return 2;
+          break;
+      }
     }
   }
 }
