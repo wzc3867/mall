@@ -46,10 +46,11 @@ export default {
 		    if (!this.$refs.wrapper) return
         this.scroll = new BSscroll(this.$refs.wrapper, {
           probeType: 3,
-          click: this.click
+          click: this.click,
           // bounce:false
           // click: true,
-          // pullUpLoad: this.pullUpLoad
+          pullUpLoad: true,
+          pullDownRefresh:true
         })
 
         // // 2.将监听事件回调
@@ -58,9 +59,12 @@ export default {
         // })
 
         // // 3.监听上拉到底部
-        // this.scroll.on('pullingUp', () => {
-        //   console.log('上拉加载');
-        //   this.$emit('pullingUp')
+        this.scroll.on('pullingUp', () => {
+          console.log('上拉加载');
+          this.$emit('pullingUp');
+        })
+        // this.scroll.on('pullingDown',() => {
+        //   console.log(112);
         // })
       },
   },

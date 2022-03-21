@@ -1,12 +1,12 @@
 <!--  -->
 <template>
      <div id="home">
-        <Scroll class="wrap">
+        <Scroll class="wrap" @pullingUp="reshData" ref="scrollWrap">
         <div>
         <MainSwiper :swiperimg="bannerImg"></MainSwiper>
         <recommend :recomimg="recommend"></recommend>
         <FeatureView></FeatureView>
-        <GoodListNav :NavData="GoodNav"></GoodListNav>
+        <GoodListNav :NavData="GoodNav" @NavIndex="Navchange"></GoodListNav>
         <GoodList :GoodData="displayList"></GoodList>
         </div>
       </Scroll>
@@ -44,6 +44,7 @@ export default {
         recommend:{},
         GoodNav:["流行","新款","精选"],
         GoodNavNum:['pop',"new","sell"],
+        NavIndex:0
     };
   },
 
@@ -93,6 +94,14 @@ export default {
           return 2;
           break;
       }
+    },
+    reshData(){
+     this.goodsList[this.NavIndex].page++;
+     this.getHomeData(this.GoodNavNum[this.NavIndex],this.goodsList[this.NavIndex].page);
+     this.$refs.scrollWrap.scroll.finishPullUp()
+    },
+    Navchange(index){
+      this.NavIndex = index;
     }
   }
 }

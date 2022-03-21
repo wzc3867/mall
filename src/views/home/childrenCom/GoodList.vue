@@ -9,6 +9,7 @@
             <div class="pricebox">
                 <span class="price">￥{{item.price}}</span>
                 <span class="collect"></span>
+                <span class="start">{{item.cfav}}</span>
             </div>
           </li>
       </ul>
@@ -50,7 +51,6 @@ export default {
         flex-wrap: wrap;
         // height: 300px;
         // width: 50%;
-        
     }
     // image {
     //     width: 50px;
@@ -84,18 +84,27 @@ export default {
     }
     .price{
         color:@color-tint;
+        margin-left:25%;
+        // transform: translateX(-70%);
     }
     .pricebox {
         font-size:.8rem;
         position: relative;
     }
     .collect::before{
-        position: absolute;
+        // position: absolute;
+        display:inline-block;
          width: 14px;
         height: 14px;
         //  left: -15px;
-        top: 0;
+        // top: 0;
         content:'';
-        background: url('../../../assets/img/common/collect.svg') 100% 100%;
+        background: url('../../../assets/img/common/collect.svg') 0px 0.7px;
+        background-size: 100% 100%;
+        margin-left:0.5rem;
+    }
+    .start{
+        // margin-left:1rem
+        // position: absolute;
     }
 </style>

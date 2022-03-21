@@ -24,6 +24,7 @@ export default {
   methods: {
       changeNav (index){
           this.currentIndex = index;
+          this.$emit('NavIndex',index);
         //   console.log(index);
       }
   }
