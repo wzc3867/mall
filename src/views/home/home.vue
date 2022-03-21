@@ -70,8 +70,9 @@ export default {
       // })
       const res = await getHomeData(type, page);
       const index =  this.getType(type);
+      console.log(index)
       this.goodsList[index].list.push(...res.data.data.list);
-      this.displayList = this.goodsList[index].list
+      this.displayList = this.goodsList[index].list;
       console.log(this.displayList); 
 
     },
@@ -87,7 +88,7 @@ export default {
         case 'pop':
           return 0;
           break;
-        case 'new:':
+        case 'new':
           return 1;
           break;
         case 'sell':
@@ -95,13 +96,19 @@ export default {
           break;
       }
     },
-    reshData(){
+    async reshData(){
      this.goodsList[this.NavIndex].page++;
-     this.getHomeData(this.GoodNavNum[this.NavIndex],this.goodsList[this.NavIndex].page);
-     this.$refs.scrollWrap.scroll.finishPullUp()
+      await this.getHomeData(this.GoodNavNum[this.NavIndex],this.goodsList[this.NavIndex].page);
+     this.$refs.scrollWrap.scroll.finishPullUp();
+     this.$refs.scrollWrap.scroll.refresh();
+    //  this.$refs.scrollWrap.refresh();
+    // console.log(this.$refs.scrollWrap.scroll.refresh());
     },
     Navchange(index){
       this.NavIndex = index;
+      console.log(this.GoodNavNum[this.NavIndex]);
+      console.log(this.goodsList[this.NavIndex].page);
+      this.getHomeData(this.GoodNavNum[this.NavIndex],this.goodsList[this.NavIndex].page)
     }
   }
 }

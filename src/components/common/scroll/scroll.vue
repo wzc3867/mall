@@ -38,7 +38,11 @@ export default {
   },
   mounted() {
     
-   setTimeout(this.__initScroll,200)
+  //  setTimeout(this.__initScroll,200)
+  this.$nextTick(() => {
+    this.__initScroll();
+    this.scroll.finishPullUp()
+  })
   },
   methods:{
     __initScroll() {

@@ -30,20 +30,19 @@ export default {
         goodLst:[]
     };
   },
-
   components: {},
   mounted() {
-      setTimeout(()=>{
-          this.goodLst = this.GoodData
-      },200)
+    //   setTimeout(()=>{
+    //       this.goodLst = this.GoodData
+    //   },200)
+    this.$nextTick(() => {
+         this.goodLst = this.GoodData;
+    })
   },
-
   computed: {
   },
-
   methods: {}
 }
-
 </script>
 <style lang='less' scoped>
     .ListBox{
