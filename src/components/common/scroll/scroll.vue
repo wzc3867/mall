@@ -42,6 +42,7 @@ export default {
   this.$nextTick(() => {
     this.__initScroll();
     this.scroll.finishPullUp()
+    console.log(this.scroll);
   })
   },
   methods:{
@@ -51,16 +52,14 @@ export default {
         this.scroll = new BSscroll(this.$refs.wrapper, {
           probeType: 3,
           click: this.click,
-          // bounce:false
-          // click: true,
           pullUpLoad: true,
           pullDownRefresh:true
         })
 
         // // 2.将监听事件回调
-        // this.scroll.on('scroll', pos => {
-        //   this.$emit('scroll', pos)
-        // })
+        this.scroll.on('scroll', pos => {
+          this.$emit('scroll', pos);
+        })
 
         // // 3.监听上拉到底部
         this.scroll.on('pullingUp', () => {

@@ -1,15 +1,19 @@
 <!--  -->
 <template>
      <div id="home">
-        <Scroll class="wrap" @pullingUp="reshData" ref="scrollWrap">
+       <GoodListNav :NavData="GoodNav" @NavIndex="Navchange" v-show="Isshow"></GoodListNav>
+        <Scroll class="wrap" @pullingUp="reshData" ref="scrollWrap" @scroll="Watchdistance">
         <div>
         <MainSwiper :swiperimg="bannerImg"></MainSwiper>
         <recommend :recomimg="recommend"></recommend>
         <FeatureView></FeatureView>
-        <GoodListNav :NavData="GoodNav" @NavIndex="Navchange"></GoodListNav>
+        <GoodListNav :NavData="GoodNav" @NavIndex="Navchange" ref="GoodNav" v-show="scollNav"></GoodListNav>
         <GoodList :GoodData="displayList"></GoodList>
         </div>
       </Scroll>
+      <div @click="backTop">
+        <img src="../../assets/img/common/top.png" alt="" class="backTop" v-show="backShow">
+      </div>
       <!-- <MainTabBar/> -->
      </div>
 
@@ -38,13 +42,17 @@ export default {
         //   'sell': {page: 1, list: []}
         // },
         // 0为pop, 1为new, 2为sell
-        goodsList:[{page: 1, list: []},{page: 1, list: []},{page: 1, list: []}],
-        displayList:[],
-        banner:[],
+        goodsList:[{page: 1, list: []},{page: 1, list: []},{page: 1, list: []}],//保存商品展示所有数据
+        displayList:[],//要展示的商品列表
+        banner:[],//推荐页
         recommend:{},
         GoodNav:["流行","新款","精选"],
         GoodNavNum:['pop',"new","sell"],
-        NavIndex:0
+        NavIndex:0,//判断nav目前那个被激活
+        Isshow:false,//是否显示吸顶Nav标志位
+        NavTop:0,//保存SColl内到顶部距离的标志位
+        scollNav: true,//判断scoll内标志位是否隐藏
+        backShow:false,//是否显示返回到顶部按钮标志位
     };
   },
 
@@ -64,16 +72,21 @@ export default {
   },
 
   methods: {
+    // 拿到商品数据的接口
     async getHomeData(type, page) {
       // getHomeData(type, page).then(res => {
       //   this.
       // })
       const res = await getHomeData(type, page);
       const index =  this.getType(type);
-      console.log(index)
+      // 将请求回来的商品列表跟原有的进行拼接和保存
       this.goodsList[index].list.push(...res.data.data.list);
       this.displayList = this.goodsList[index].list;
-      console.log(this.displayList); 
+      // console.log(this.displayList); 
+      //获取goodNav距离顶部得值 
+       this.$nextTick(() => {
+       this.NavTop = this.$refs.GoodNav.$el.offsetTop;
+    })
 
     },
     getHomeMultiple(){
@@ -83,6 +96,7 @@ export default {
         this.recommend = res.data.data.recommend.list;
       })
     },
+    // 判断要跟接口请求哪一个类型数据
     getType(type){
       switch(type){
         case 'pop':
@@ -96,6 +110,7 @@ export default {
           break;
       }
     },
+    // 刷新后请求新的数据
     async reshData(){
      this.goodsList[this.NavIndex].page++;
       await this.getHomeData(this.GoodNavNum[this.NavIndex],this.goodsList[this.NavIndex].page);
@@ -104,11 +119,33 @@ export default {
     //  this.$refs.scrollWrap.refresh();
     // console.log(this.$refs.scrollWrap.scroll.refresh());
     },
+    // 判断点击了哪个NAV的
     Navchange(index){
       this.NavIndex = index;
       console.log(this.GoodNavNum[this.NavIndex]);
       console.log(this.goodsList[this.NavIndex].page);
       this.getHomeData(this.GoodNavNum[this.NavIndex],this.goodsList[this.NavIndex].page)
+    },
+    // 监听滑动的距离
+    Watchdistance(dis){
+      // 判断NAV是否要吸顶
+      if(dis.y<-this.NavTop) {
+        this.Isshow = true;
+        this.scollNav = false;
+      } else {
+        this.Isshow = false;
+        this.scollNav = true;
+      }
+      // 判断回到顶部图标是否要回显
+      if(dis.y < -1000) {
+        this.backShow = true;
+      } else {
+        this.backShow = false;
+      }
+    },
+    backTop() {
+      // 点击按钮返回到顶部
+      this.$refs.scrollWrap.scroll.scrollTo(0,0,300)
     }
   }
 }
@@ -135,5 +172,12 @@ export default {
   // margin-bottom: 48px;
   // width: 100px;
 
+}
+.backTop{
+  width:3rem;
+  height:3rem;
+  position:fixed;
+  bottom:9rem;
+  right:0;
 }
 </style>
