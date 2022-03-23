@@ -69,6 +69,10 @@ export default {
         // this.scroll.on('pullingDown',() => {
         //   console.log(112);
         // })
+        //监听滑动结束后得位置
+        // this.scroll.on("scrollEnd", (pos) => {
+        //   this.$emit('scrollEnd',pos)
+        // })
       },
   },
   updated() {

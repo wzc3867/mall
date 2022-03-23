@@ -2,7 +2,7 @@
 <template>
      <div id="home">
        <GoodListNav :NavData="GoodNav" @NavIndex="Navchange" v-show="Isshow"></GoodListNav>
-        <Scroll class="wrap" @pullingUp="reshData" ref="scrollWrap" @scroll="Watchdistance">
+        <Scroll class="wrap" @pullingUp="reshData" ref="scrollWrap" @scroll="Watchdistance" >
         <div>
         <MainSwiper :swiperimg="bannerImg"></MainSwiper>
         <recommend :recomimg="recommend"></recommend>
@@ -34,6 +34,8 @@ export default {
     // 请求homeBar数据
     this.getHomeData(this.GoodNavNum[0],this.goodsList[0].page);
   },
+
+
   data () {
     return {
         // goodsList: {
@@ -53,9 +55,21 @@ export default {
         NavTop:0,//保存SColl内到顶部距离的标志位
         scollNav: true,//判断scoll内标志位是否隐藏
         backShow:false,//是否显示返回到顶部按钮标志位
+        leaveY:0
     };
   },
+     activated(){
+      this.$nextTick(() => {
+      console.log(this.leaveY);
+      this.$refs.scrollWrap.scroll.scrollTo(0,this.leaveY,0);
+      this.$refs.scrollWrap.scroll.refresh();
+    })
+  },
+    deactivated(){
+    this.leaveY = this.leaveY;
 
+    // this.leaveY = this.leaveY;
+  },
   components: {
     MainSwiper,
     recommend,
@@ -142,11 +156,16 @@ export default {
       } else {
         this.backShow = false;
       }
+      this.leaveY = dis.y
     },
     backTop() {
       // 点击按钮返回到顶部
       this.$refs.scrollWrap.scroll.scrollTo(0,0,300)
-    }
+    },
+    // distanceEnd(dis) {
+    //   console.log(dis);
+    //   this.leaveY = dis.y
+    // }
   }
 }
 

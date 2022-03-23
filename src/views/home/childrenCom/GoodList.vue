@@ -2,7 +2,7 @@
 <template>
   <div id="goodlist">
       <ul class="ListBox" >
-          <li v-for="(item, index) in GoodData" :key="index" class="imgBox">
+          <li v-for="(item, index) in GoodData" :key="index" class="imgBox" @click="changDetail(index)">
               <!-- {{item}} -->
             <img :src="item.show.img">
             <div class="img-text" v-for="(items) in item.props" :key="items" >{{items}}</div>
@@ -41,7 +41,13 @@ export default {
   },
   computed: {
   },
-  methods: {}
+  methods: {
+      changDetail(index) {
+          console.log(index);
+        console.log(this.GoodData[index])
+        this.$router.push({path:'detail', query:{id:this.GoodData[index].iid}})
+      }
+  }
 }
 </script>
 <style lang='less' scoped>
