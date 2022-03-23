@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <MainNavBar></MainNavBar>
+    <MainNavBar v-show="Isshow"></MainNavBar>
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
-    <MainTabBar/>
+    <MainTabBar v-show="Isshow"/>
   </div>
 </template>
 
@@ -15,7 +15,19 @@ export default {
   components: {
     MainTabBar,
     MainNavBar,
-  }
+  },
+  updated() {
+    if(this.$route.path == "/detail") {
+      this.Isshow = false;
+    } else {
+      this.isshow = true;
+    }
+  },
+  data() {
+    return {
+      Isshow:true
+    }
+  },
 }
 </script>
 

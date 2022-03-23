@@ -29,7 +29,7 @@ const routes = [
     component: cart
   },
   {
-    path: '/detail/?q=id',
+    path: '/detail',
     component: detail
   }
 ]
