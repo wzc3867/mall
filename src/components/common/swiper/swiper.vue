@@ -1,9 +1,20 @@
 <!--  -->
 <template>
   <div class="Contain">
-    <div class="swiper-box" ref="swiperBox" @touchstart="TouchStart" @touchmove="TouchMove" @touchend="TouchEnd">
-    <img :src="item.image" v-for="(item, index) in imgswip" :key="index" ref="swipers" >
+    <div class="swiper-box" ref="swiperBox" @touchstart="TouchStart" @touchmove="TouchMove" @touchend="TouchEnd" v-if="Ishow">
+      <img :src="item.image?item.image:item" v-for="(item, index) in imgswip" :key="index" ref="swipers" class="displayImg">
+    <!-- <img src="//s11.mogucdn.com/mlcdn/c45406/180808_7abl65i38i34lgk746061b4bg183b_640x960.jpg" alt=""> -->
   </div>
+  <div class="swiper-box_detail" ref="swiperBox" @touchstart="TouchStart" @touchmove="TouchMove" @touchend="TouchEnd" v-else>
+    <div v-for="(item, index) in imgswip" :key="index" ref="swipers" style="height:100%;width:100vw">
+      
+        <img :src="item.image?item.image:item" style="width:100%">
+    </div>
+    <!-- <div style="height:100%">
+      <img src="//s11.mogucdn.com/mlcdn/c45406/180808_7abl65i38i34lgk746061b4bg183b_640x960.jpg" alt="" style="width: 100%">
+    </div> -->
+  </div>
+
    <!-- 指示点渲染 -->
   <div class="indicatorBox">
     <ul class="indicator">
@@ -18,9 +29,14 @@ export default {
   props:{
     imgswip:{
       required:true
+    },
+    ISshow:{
+      type:Boolean,
+      default:true
     }
   },
   mounted() {
+    this.Ishow = this.ISshow;
     setTimeout(() =>{
       console.log(this.$refs.swipers);
       this.handleDom();
@@ -38,7 +54,8 @@ export default {
       startX:'',//手指触碰的X轴坐标
       currentX:'',//当前位置的X坐标
       distance:'',//移动的距离
-      moveRatio:0.25//判断手指移动图片几分之几就要切换图片
+      moveRatio:0.25,//判断手指移动图片几分之几就要切换图片
+      Ishow:false,//
     };
   },
   components: {},
@@ -245,6 +262,11 @@ export default {
     position: relative;
     // overflow: hidden;
 }
+.swiper-box_detail{
+  .pxToVW(195, height);
+    display:flex;
+    position: relative;
+}
 .indicator{
   display:flex;
 }
@@ -268,5 +290,8 @@ ul{
 }
 .activeColor{
   background-color: rgba(212,62,46,1.0)!important;
+}
+.displayImg{
+  width: 100%
 }
 </style>

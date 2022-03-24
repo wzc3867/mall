@@ -60,7 +60,6 @@ export default {
   },
      activated(){
       this.$nextTick(() => {
-      console.log(this.leaveY);
       this.$refs.scrollWrap.scroll.scrollTo(0,this.leaveY,0);
       this.$refs.scrollWrap.scroll.refresh();
     })

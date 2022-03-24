@@ -20,7 +20,7 @@ export default {
     if(this.$route.path == "/detail") {
       this.Isshow = false;
     } else {
-      this.isshow = true;
+      this.Isshow = true;
     }
   },
   data() {
