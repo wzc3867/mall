@@ -12,7 +12,7 @@
       </div>
      </MainNavBar>
      <!-- 轮播组件 -->
-     <DetailSwiper  :swiperimg="goodsClass.swiperImg"></DetailSwiper>
+     <!-- <DetailSwiper  :swiperimg="goodsClass.swiperImg"></DetailSwiper> -->
   </div>
 </template>
 

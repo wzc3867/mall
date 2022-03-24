@@ -6,7 +6,8 @@
 </template>
 
 <script>
-import Swiper from "../../../components/common/swiper/swiper.vue";
+import Swiper from "../../../components/common/Swper_New/Swiper.vue";
+import SwiperItem from "../../../components/common/Swper_New/SwiperItem.vue"
 export default {
   props: {
     swiperimg:{
@@ -23,7 +24,8 @@ export default {
   },
 
   components: {
-      Swiper
+      Swiper,
+      SwiperItem
   },
 
   computed: {},
