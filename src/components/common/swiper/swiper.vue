@@ -7,7 +7,6 @@
   </div>
   <div class="swiper-box_detail" ref="swiperBox" @touchstart="TouchStart" @touchmove="TouchMove" @touchend="TouchEnd" v-else>
     <div v-for="(item, index) in imgswip" :key="index" ref="swipers" style="height:100%;width:100vw">
-      
         <img :src="item.image?item.image:item" style="width:100%">
     </div>
     <!-- <div style="height:100%">

@@ -2,7 +2,7 @@
 <template>
   <div id="detail">
     <!-- 顶部NavBar组件 -->
-     <MainNavBar bckcolor="#FFF">
+     <MainNavBar style="background-color: #FFF">
       <div slot="left" class="backBox" @click="goBack">
          <div class="backImg" ></div>
       </div>
@@ -12,7 +12,7 @@
       </div>
      </MainNavBar>
      <!-- 轮播组件 -->
-     <!-- <DetailSwiper  :swiperimg="goodsClass.swiperImg"></DetailSwiper> -->
+     <DetailSwiper  :swiperimg="goodsClass.swiperImg"></DetailSwiper>
   </div>
 </template>
 
@@ -65,7 +65,7 @@ export default {
       const data = res.data.result;
       console.log(data);
       this.goodsClass = new Goods(data.itemInfo,data.columns,data.shopInfo.services);
-      console.log(this.goodsClass.swiperImg);
+      // console.log(this.goodsClass.swiperImg);
     }
   }
 }

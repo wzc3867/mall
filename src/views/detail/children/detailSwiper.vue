@@ -1,7 +1,11 @@
 <!--  -->
 <template>
   <div>
-      <!-- <Swiper :imgswip="swiperimg" :ISshow="false"></Swiper> -->
+      <Swiper>
+        <SwiperItem v-for="(item,index) in swiperimg" :key="index" class="imgBox">
+            <img :src="item" >
+        </SwiperItem>
+      </Swiper>
   </div>
 </template>
 
@@ -11,7 +15,9 @@ import SwiperItem from "../../../components/common/Swper_New/SwiperItem.vue"
 export default {
   props: {
     swiperimg:{
-      required:true
+      required:true,
+      type:Array,
+      default:[]
     },
   },
   created() {
@@ -35,4 +41,8 @@ export default {
 
 </script>
 <style lang='less' scoped>
+.imgBox {
+  height: 300px;
+  text-align: center;
+}
 </style>
