@@ -11,13 +11,26 @@ export default {
   data () {
     return {
       SwiperStyle:null,
-      totalWidth:0
+      currentWidth:0,
+      currentIndex:0
     };
   },
   mounted() {
     // 获取DOM元素
     this.$nextTick(() => {
-      // 拿到Swiper的盒子
+      this.Init();
+      this.InitPosition();
+        setInterval(() => {
+        this.currentIndex++;
+        this.setPosition(this.currentWidth*this.currentIndex);
+        this.setAnimation();
+      }, 3000);
+    })
+  },
+  methods: {
+    // 初始化轮播数组
+    Init() {
+        // 拿到Swiper的盒子
       const EleBox = this.$refs.swiperContent;
       // 拿到Swiper里面的图片
       const EleImg = document.getElementsByClassName("ImgBoxs");
@@ -30,15 +43,28 @@ export default {
         // 获取样式的样式
         this.SwiperStyle = EleBox.style;
         // 获取当前图片的宽度
-        this.totalWidth = FirstImg.offsetWidth
+        this.currentWidth = FirstImg.offsetWidth;
+        console.log(this.SwiperStyle);
+       
       }
-    })
-  },
-  methods: {
+    },
     // 初始化设置
-    Init() {
-      
-    }
+    InitPosition() {
+      this.setPosition(this.currentWidth)
+    },
+    // 设置正确的位置
+    setPosition(pos) {
+      console.log(`translateX(-${pos})`);
+      this.SwiperStyle.transform = `translateX(-${pos}px)`
+      console.log(this.SwiperStyle);
+    },
+    // 设置动画
+    setAnimation() {
+      console.log( this.SwiperStyle);
+      this.SwiperStyle.transition = "1s "
+    },
+    //检查轮播位置
+
   }
 }
 </script>
