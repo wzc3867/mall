@@ -2,7 +2,11 @@
     <div class="SwiperBox">
         <div class="swiperContent" ref="swiperContent">
             <slot></slot>
+            <!-- 轮播运行的小圆点 -->
         </div>
+          <ul class="dotBox">
+              <li v-for="(item,index) in SwiperImgLength" :key="item" :class="[{'dot':true},{'active': currentIndex == dotIndex?true:false}]"></li>
+            </ul>
     </div>
 </template>
 <script>
@@ -14,6 +18,7 @@ export default {
       currentWidth:0,
       currentIndex:1,
       SwiperImgLength:0,
+      dotIndex:1
     };
   },
   mounted() {
@@ -26,8 +31,9 @@ export default {
         setInterval(() => {
         //改变当前坐标的位置 
         this.currentIndex++;
+        this.dotIndex++
         //设置轮播滚动的过程
-        this.runningSwiper(this.currentWidth*this.currentIndex);
+        this.runningSwiper();
       }, 3000);
     })
   },
@@ -44,11 +50,8 @@ export default {
       
         const FirstImg = EleImg[0].cloneNode(true);
         const LastImg = EleImg[EleImg.length - 1].cloneNode(true);
-        console.log(FirstImg);
-        console.log(LastImg);
         EleBox.insertBefore(LastImg,EleImg[0]);
         EleBox.appendChild(FirstImg,EleImg[EleImg.length-1]);
-        console.log(EleBox);
 
         // 获取样式的样式
         this.SwiperStyle = EleBox.style;
@@ -64,6 +67,7 @@ export default {
     },
     // 设置正确的位置
     setPosition(pos) {
+      console.log(pos);
       // 设置位置
       this.SwiperStyle.transform = `translateX(-${pos}px)`
       // this.setAnimation();
@@ -75,26 +79,28 @@ export default {
     },
     //检查轮播位置
     checkPosition(pos) {
+      if(this.dotIndex >=this.currentIndex-1) {
+        this.dotIndex = 0;
+      }
     // console.log( document.getElementsByClassName("ImgBoxs").length);
       //
       setTimeout(() =>{
         this.SwiperStyle.transition = "0ms"
-        if(this.currentIndex >=this.SwiperImgLength-1) {
-          console.log(33);
+        if(this.currentIndex >=this.SwiperImgLength) {
           this.currentIndex = 1;
-          this.setPosition(-this.currentIndex*this.currentWidth);
+          this.setPosition(this.currentIndex*this.currentWidth);
         } else if(this.currentIndex <= 0) {
           this.currentIndex = this.SwiperImgLength-2;
         }
       },1200)
     },
-    // 
+    //运行轮播的方法
     runningSwiper(pos){
       // 改变每次滚动的位置
       this.setPosition(this.currentWidth*this.currentIndex);
       // 设置滚动动画
       this.setAnimation();
-      // 检查每次滚动后的位置是否正确
+          // 检查每次滚动后的位置是否正确
       this.checkPosition(pos);
     }
   }
@@ -108,5 +114,24 @@ export default {
 .swiperContent{
   display:flex;
   // flex-shrink: 0;
+}
+.dotBox {
+  display: flex;
+  // background: red;
+  position: absolute;
+  bottom:0.7rem;
+  left:50%;
+  transform: translateX(-50%);
+}
+.dot{
+  height:0.8rem;
+  width:0.8rem;
+  // background-color: red;
+  border-radius:1rem;
+  margin-left: 0.1rem;
+  background-color: #fff;
+}
+.active{
+  background-color: @color-tint;
 }
 </style>
