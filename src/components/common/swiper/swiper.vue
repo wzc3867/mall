@@ -130,7 +130,8 @@ export default {
           // console.log('111'+that.Scrolling);
              // 1.校验正确的位置
           this.swiperStyle.transition = '0ms';
-          if(this.currentIndex >= this.$refs.swipers.length+1) {
+          console.log(this.$refs.swipers.length);
+          if(this.currentIndex >= this.$refs.swipers.length-1) {
             this.currentIndex =1;
             this.setTransform(-this.currentIndex*this.totalWidth)
           } else if(this.currentIndex == 0 && this.indicatorIndex == 4) {
