@@ -5,8 +5,9 @@
             <!-- 轮播运行的小圆点 -->
         </div>
           <ul class="dotBox">
-              <li v-for="(item,index) in SwiperImgLength" :key="item" :class="[{'dot':true},{'active': currentIndex == dotIndex?true:false}]"></li>
+              <li v-for="(item,index) in dotLength" :key="item" :class="[{'dot':true},{'active': index == dotIndex-1?true:false}]"></li>
             </ul>
+
     </div>
 </template>
 <script>
@@ -18,7 +19,8 @@ export default {
       currentWidth:0,
       currentIndex:1,
       SwiperImgLength:0,
-      dotIndex:1
+      dotIndex:1, 
+      dotLength:0
     };
   },
   mounted() {
@@ -26,8 +28,6 @@ export default {
     this.$nextTick(() => {
       this.Init();
       this.InitPosition();
-        //设置刚开始的时候轮播图的位置 
-        this.setPosition(this.currentWidth*this.currentIndex);
         setInterval(() => {
         //改变当前坐标的位置 
         this.currentIndex++;
@@ -47,7 +47,6 @@ export default {
       const EleImg = document.getElementsByClassName("ImgBoxs");
       // 判断是不是只有一张图片，如果不是则往元素里面前后各插入一张图片
       if(EleImg.length > 1) {
-      
         const FirstImg = EleImg[0].cloneNode(true);
         const LastImg = EleImg[EleImg.length - 1].cloneNode(true);
         EleBox.insertBefore(LastImg,EleImg[0]);
@@ -59,11 +58,13 @@ export default {
         this.currentWidth = FirstImg.offsetWidth;
         //保存轮播图片的子数组
         this.SwiperImgLength = EleImg.length;
+        // 保存下面图标圆标的长度
+        this.dotLength = this.SwiperImgLength -2;
       }
     },
     // 初始化设置
     InitPosition() {
-      this.setPosition(this.currentWidth);
+      this.setPosition(this.currentWidth * this.currentIndex);
     },
     // 设置正确的位置
     setPosition(pos) {
@@ -79,14 +80,14 @@ export default {
     },
     //检查轮播位置
     checkPosition(pos) {
-      if(this.dotIndex >=this.currentIndex-1) {
-        this.dotIndex = 0;
+      if(this.dotIndex >this.SwiperImgLength-2 ) {
+        this.dotIndex = 1;
       }
     // console.log( document.getElementsByClassName("ImgBoxs").length);
       //
       setTimeout(() =>{
         this.SwiperStyle.transition = "0ms"
-        if(this.currentIndex >=this.SwiperImgLength) {
+        if(this.currentIndex >=this.SwiperImgLength-1) {
           this.currentIndex = 1;
           this.setPosition(this.currentIndex*this.currentWidth);
         } else if(this.currentIndex <= 0) {
