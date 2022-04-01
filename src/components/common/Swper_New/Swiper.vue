@@ -42,7 +42,6 @@ export default {
     Init() {
         // 拿到Swiper的盒子
       const EleBox = this.$refs.swiperContent;
-        console.log(EleBox);
       // 拿到Swiper里面的图片
       const EleImg = document.getElementsByClassName("ImgBoxs");
       // 判断是不是只有一张图片，如果不是则往元素里面前后各插入一张图片
@@ -68,7 +67,6 @@ export default {
     },
     // 设置正确的位置
     setPosition(pos) {
-      console.log(pos);
       // 设置位置
       this.SwiperStyle.transform = `translateX(-${pos}px)`
       // this.setAnimation();
@@ -125,14 +123,14 @@ export default {
   transform: translateX(-50%);
 }
 .dot{
-  height:0.8rem;
-  width:0.8rem;
+  height:0.5rem;
+  width:0.5rem;
   // background-color: red;
   border-radius:1rem;
   margin-left: 0.1rem;
   background-color: #fff;
 }
 .active{
-  background-color: @color-tint;
+  background-color: red;
 }
 </style>

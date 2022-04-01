@@ -13,6 +13,7 @@
      </MainNavBar>
      <!-- 轮播组件 -->
      <DetailSwiper  :swiperimg="goodsClass.swiperImg"></DetailSwiper>
+     <DetailIntro></DetailIntro>
   </div>
 </template>
 
@@ -24,6 +25,8 @@ import DetailSwiper from '../detail/children/detailSwiper.vue'
 
 //引入detail得网络请求方法
 import {getDetail,Goods} from "../../network/detail"
+// 引入DetailIntro
+import DetailIntro from "./children/detailIntro.vue"
 export default {
 
   data () {
@@ -44,7 +47,8 @@ export default {
   },
   components: {
     MainNavBar,
-    DetailSwiper
+    DetailSwiper,
+    DetailIntro
   },
 
   computed: {},
