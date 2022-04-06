@@ -1,18 +1,25 @@
 <template>
     <div id="DetailIntro">
         <div class="title">
-          {{this.goodsData.desc}}
+          {{goodsData.desc}}
         </div>
         <div class="price">
-            <div class="newPrice">{{this.goodsData.newPrice}}</div>
-            <div class="oldPrice">{{this.goodsData.oldPrice}}</div>
-            <div class="discount">{{this.goodsData.discount}}</div>
+            <div class="newPrice">{{goodsData.newPrice}}</div>
+            <div class="oldPrice">{{goodsData.oldPrice}}</div>
+            <div class="discount">{{goodsData.discount}}</div>
         </div>
-        <div class="columns">
-          <div  v-for="(item) in goodsData.columns" :key="item" class="columnsItem">
+        <div class="columns" v-if="goodsData.columns.length>0">
+          <div  v-for="(item,index) in goodsData.columns" :key="item" class="columnsItem" :class="{'right':index == serveLength-1,'left':index == 0}">
             {{item}}
           </div>
         </div>
+        <div class="services">
+          <div v-for="(item,index) in goodsData.services" :key="index" class="servicesItem">
+            <span class="servicesIcon"><img :src="item.icon" alt=""></span>
+            <span>{{item.name}}</span>
+          </div>
+        </div>
+
     </div>
 </template>
 <script>
@@ -22,6 +29,7 @@ export default {
     goodsData:{
       type: Object,
       required: true,
+      serveLength:0
     }
   },
   data () {
@@ -29,7 +37,8 @@ export default {
       Intro: ""
     };
   },
-  created () {
+  mounted () {
+    this.serveLength = this.goodsData.columns.length;
     console.log(this.goodsData);
   }
 }
@@ -75,11 +84,41 @@ export default {
 .columns{
   display:flex;
   margin-top: 1.5rem;
+  border-bottom: #f2f5f8 .2rem solid;
+  padding-bottom:.5rem
 }
 .columnsItem{
   flex: 1;
   font-size:.8rem;
   color:#999;
- margin-left: .5rem;
+  margin-left: .5rem;
+  text-align: center;
+}
+.right{
+  text-align: right;
+  margin-right: 1rem;
+}
+.left{
+  text-align: left;
+}
+.services{
+  display:flex;
+  font-size:.6rem;
+  margin-top: .4rem;
+  // justify-content: center;
+}
+.servicesIcon{
+  display:inline-block;
+  width: .5rem;
+  height: .5rem;
+}
+.servicesIcon img {
+  width: 100%;
+  height: 100%;
+}
+.servicesItem{
+  // margin-left:   .3rem;
+  text-align: center;
+  flex: 1
 }
 </style>

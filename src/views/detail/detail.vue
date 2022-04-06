@@ -13,7 +13,10 @@
      </MainNavBar>
      <!-- 轮播组件 -->
      <DetailSwiper  :swiperimg="goodsClass.swiperImg"></DetailSwiper>
-     <DetailIntro :goodsData="goodsClass"></DetailIntro>
+     <!-- 价格组件 -->
+     <DetailIntro :goodsData="goodsClass" class="IntroBorder"></DetailIntro>
+     <!-- 店铺组件 -->
+     <ShopDetail :goodData="goodData"></ShopDetail>
   </div>
 </template>
 
@@ -22,6 +25,8 @@
 import MainNavBar from "../../components/common/navBar/navBar.vue"
 // 引入swiper组件
 import DetailSwiper from '../detail/children/detailSwiper.vue'
+// 引入店铺描述组件
+import ShopDetail from '../detail/children/shopdetail.vue'
 
 //引入detail得网络请求方法
 import {getDetail,Goods} from "../../network/detail"
@@ -36,7 +41,8 @@ export default {
       TabClass:"TabClass",//绑定式加载tabclass样式
       Active:"active",//动态绑定激活样式
       id:'',//传捡来得id值
-      goodsClass:null
+      goodsClass:null,
+      goodData:null
     };
   },
   created(){
@@ -48,7 +54,8 @@ export default {
   components: {
     MainNavBar,
     DetailSwiper,
-    DetailIntro
+    DetailIntro,
+    ShopDetail
   },
 
   computed: {},
@@ -69,6 +76,7 @@ export default {
       const data = res.data.result;
       console.log(data);
       this.goodsClass = new Goods(data.itemInfo,data.columns,data.shopInfo.services);
+      this.goodData = data;
       // console.log(this.goodsClass.swiperImg);
     }
   }
@@ -110,5 +118,9 @@ export default {
 }
 .active{
   color:@color-tint;
+}
+.IntroBorder{
+  border-bottom: .4rem #f2f5f8 solid;
+  padding-bottom:1rem;
 }
 </style>

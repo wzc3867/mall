@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div>
+  <div v-if="swiperimg.length >0">
       <Swiper>
         <SwiperItem v-for="(item,index) in swiperimg" :key="index" class="imgBox">
             <img :src="item" >
@@ -21,7 +21,6 @@ export default {
     },
   },
   created() {
-  
   },
   data () {
     return {
