@@ -11,12 +11,18 @@
           </div>
       </div>
      </MainNavBar>
-     <!-- 轮播组件 -->
-     <DetailSwiper  :swiperimg="goodsClass.swiperImg"></DetailSwiper>
-     <!-- 价格组件 -->
-     <DetailIntro :goodsData="goodsClass" class="IntroBorder"></DetailIntro>
-     <!-- 店铺组件 -->
-     <ShopDetail :goodData="goodData"></ShopDetail>
+     <Scroll class="wrap">
+       <div>
+           <!-- 轮播组件 -->
+        <DetailSwiper  :swiperimg="goodsClass.swiperImg"></DetailSwiper>
+        <!-- 价格组件 -->
+        <DetailIntro :goodsData="goodsClass" class="IntroBorder"></DetailIntro>
+        <!-- 店铺组件 -->
+        <ShopDetail :goodData="goodData"></ShopDetail>
+       </div>
+     </Scroll>
+     <!-- 详情底部按钮 -->
+     <DeatilBottom class="Bottom"></DeatilBottom>
   </div>
 </template>
 
@@ -27,11 +33,15 @@ import MainNavBar from "../../components/common/navBar/navBar.vue"
 import DetailSwiper from '../detail/children/detailSwiper.vue'
 // 引入店铺描述组件
 import ShopDetail from '../detail/children/shopdetail.vue'
-
-//引入detail得网络请求方法
-import {getDetail,Goods} from "../../network/detail"
 // 引入DetailIntro
 import DetailIntro from "./children/detailIntro.vue"
+// 引入底部组件
+import DeatilBottom from './children/detailBottom.vue'
+// 引入封装的滚动组件
+import Scroll from "../../components/common/scroll/scroll.vue"
+//引入detail得网络请求方法
+import {getDetail,Goods} from "../../network/detail"
+
 export default {
 
   data () {
@@ -55,7 +65,9 @@ export default {
     MainNavBar,
     DetailSwiper,
     DetailIntro,
-    ShopDetail
+    ShopDetail,
+    Scroll,
+    DeatilBottom
   },
 
   computed: {},
@@ -122,5 +134,14 @@ export default {
 .IntroBorder{
   border-bottom: .4rem #f2f5f8 solid;
   padding-bottom:1rem;
+}
+.wrap{
+  // height:500px;
+  height:calc(100vh-48px);
+  overflow: hidden;
+}
+.Bottom{
+  position:fixed;
+  bottom:0
 }
 </style>

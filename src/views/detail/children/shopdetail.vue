@@ -8,6 +8,35 @@
             </div>
             <div class="shopName">{{goodData.shopInfo.name}}</div>
         </div>
+        <div class="shopInfo">
+          <div class="Info_box">
+            <div class="shopInfoItem">
+            <div class="Info_Num">{{goodData.shopInfo.cSells | checkdisplayNum}}</div>
+            <div class="Info_titile">总销量</div>
+          </div>
+          <div class="shopInfoItem">
+            <div class="Info_Num">{{goodData.shopInfo.cGoods}}</div>
+            <div class="Info_titile">全部宝贝</div>
+          </div>
+          </div>
+          <div class="describe">
+            <div v-for="(item,index) in goodData.shopInfo.score" :key="index">
+              {{item.name}}<span class="Info_score" :class="item.isBetter?'heightColor':'lowColor'">{{item.score}}</span> <span class="Info_remark" :class="item.isBetter?'height':'low'">{{item.isBetter?'高':'低'}}</span>
+            </div>
+          </div>
+        </div>
+        <ul>
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+          <li>6</li>
+          <li>7</li>
+          <li>8</li>
+          <li>9</li>
+          <li>0</li>
+        </ul>
     </div>
   </div>
 </template>
@@ -29,7 +58,16 @@ export default {
 
   computed: {},
 
-  methods: {}
+  methods: {},
+  filters:{
+    checkdisplayNum(val) {
+      if(val > 10000) {
+        return (val/10000).toFixed(1)+'万'
+      } else {
+        return val
+      }
+    }
+  }
 }
 
 </script>
@@ -59,8 +97,73 @@ export default {
     position:absolute;
     left:5.5rem;
     top: 50%;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     transform:translateY(-50%);
     color: #666;
+}
+
+.shopInfo{
+  margin-left:1.5rem;
+  margin-top:1rem;
+  display: flex;
+
+}
+.Info_box{
+  flex: 1;
+  display: flex;
+    border-right: 1px #ccc solid;
+}
+.shopInfoItem{
+  text-align:center;
+  margin-left:.5rem
+  // justify-content:center
+  // flex: 1;
+  // display:inline-block;
+}
+.describe{
+  flex: 1;
+  font-size:.9rem;
+  color: #333;
+  margin-left: 1.5rem;
+}
+.Info_titile{
+  font-size: .8rem;
+  margin-top: .6rem;
+}
+.Info_Num{
+  font-size: 1.2rem;
+  // margin-top: .2rem;
+  // text-align: center
+}
+.Info_score{
+  display: inline-block;
+  width:2rem;
+  margin-left: 1.2rem;
+}
+.Info_remark{
+  display: inline-block;
+  width: 1rem;
+  color: #fff;
+  height: 1rem;
+  width: 1rem;
+  text-align: center;
+}
+.describe > div {
+  margin-top: .6rem;
+}
+.describe :nth-child(1) {
+  margin-top: -0.5rem;
+}
+.low{
+    background-color:#5ea732;
+}
+.height{
+  background-color:#f13e3a
+}
+.lowColor{
+  color:#5ea732
+}
+.heightColor{
+  color:#f13e3a
 }
 </style>
