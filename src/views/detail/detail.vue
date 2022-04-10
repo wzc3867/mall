@@ -137,7 +137,7 @@ export default {
 }
 .wrap{
   // height:500px;
-  height:calc(100vh-48px);
+  height:calc(100vh - 48px - 49px);
   overflow: hidden;
 }
 .Bottom{

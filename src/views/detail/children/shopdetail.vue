@@ -25,18 +25,7 @@
             </div>
           </div>
         </div>
-        <ul>
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-          <li>4</li>
-          <li>5</li>
-          <li>6</li>
-          <li>7</li>
-          <li>8</li>
-          <li>9</li>
-          <li>0</li>
-        </ul>
+        <div class="IntoButtom">进店逛逛</div>
     </div>
   </div>
 </template>
@@ -165,5 +154,17 @@ export default {
 }
 .heightColor{
   color:#f13e3a
+}
+.IntoButtom{
+  width:9rem;
+  height:2rem;
+  background-color:#f2f5f8;
+  line-height:2rem;
+  text-align:center;
+  border-radius:.6rem;
+  font-size:.8rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-top:1rem
 }
 </style>
