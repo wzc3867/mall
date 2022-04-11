@@ -18,7 +18,21 @@
         <!-- 价格组件 -->
         <DetailIntro :goodsData="goodsClass" class="IntroBorder"></DetailIntro>
         <!-- 店铺组件 -->
-        <ShopDetail :goodData="goodData"></ShopDetail>
+        <ShopDetail :goodData="goodData" class="shopDetail"></ShopDetail>
+        <!-- 详情组件 -->
+        <BriefIntro :Intro="goodData.detailInfo.desc"></BriefIntro>
+        <ul>
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+          <li>6</li>
+          <li>7</li>
+          <li>8</li>
+          <li>9</li>
+          <li>10</li>
+        </ul>
        </div>
      </Scroll>
      <!-- 详情底部按钮 -->
@@ -37,6 +51,8 @@ import ShopDetail from '../detail/children/shopdetail.vue'
 import DetailIntro from "./children/detailIntro.vue"
 // 引入底部组件
 import DeatilBottom from './children/detailBottom.vue'
+// 引入详情介绍的组件
+import BriefIntro from './children/briefInt.vue' 
 // 引入封装的滚动组件
 import Scroll from "../../components/common/scroll/scroll.vue"
 //引入detail得网络请求方法
@@ -67,7 +83,8 @@ export default {
     DetailIntro,
     ShopDetail,
     Scroll,
-    DeatilBottom
+    DeatilBottom,
+    BriefIntro
   },
 
   computed: {},
@@ -143,5 +160,9 @@ export default {
 .Bottom{
   position:fixed;
   bottom:0
+}
+.shopDetail{
+border-bottom: .4rem #f2f5f8 solid;
+  padding-bottom:2rem;
 }
 </style>
