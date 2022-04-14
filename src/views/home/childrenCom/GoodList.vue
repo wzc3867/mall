@@ -44,7 +44,7 @@ export default {
   methods: {
       changDetail(index) {
           console.log(index);
-        console.log(this.GoodData[index])
+        console.log(this.GoodData[index].iid)
         this.$router.push({path:'detail', query:{id:this.GoodData[index].iid}})
       }
   }

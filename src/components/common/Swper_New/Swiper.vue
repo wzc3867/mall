@@ -7,7 +7,6 @@
           <ul class="dotBox">
               <li v-for="(item,index) in dotLength" :key="item" :class="[{'dot':true},{'active': index == dotIndex-1?true:false}]"></li>
             </ul>
-
     </div>
 </template>
 <script>

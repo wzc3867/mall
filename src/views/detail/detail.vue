@@ -77,6 +77,13 @@ export default {
   mounted() {
     console.log(233);
   },
+  watch:{
+    '$route':function(){
+      this.id = this.$route.query.id;
+      console.log(this.id);
+      // this.getDetailData() ;
+    }
+  },
   components: {
     MainNavBar,
     DetailSwiper,
@@ -91,6 +98,8 @@ export default {
 
   activated(){
     this.getDetailData();
+    console.log(this.id);
+    // console.log(this.goodData.swiperImg);
   },
 
   methods: {
@@ -103,10 +112,9 @@ export default {
     async getDetailData() {
       const res = await getDetail(this.id);
       const data = res.data.result;
-      console.log(data);
       this.goodsClass = new Goods(data.itemInfo,data.columns,data.shopInfo.services);
       this.goodData = data;
-      // console.log(this.goodsClass.swiperImg);
+      console.log(this.goodsClass.swiperImg);
     }
   }
 }

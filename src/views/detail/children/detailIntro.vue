@@ -1,7 +1,7 @@
 <template>
     <div id="DetailIntro">
         <div class="title">
-          {{goodsData.desc}}
+          {{goodsData.title}}
         </div>
         <div class="price">
             <div class="newPrice">{{goodsData.newPrice}}</div>

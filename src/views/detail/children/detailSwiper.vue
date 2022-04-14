@@ -1,6 +1,7 @@
 <!--  -->
 <template>
   <div v-if="swiperimg.length >0">
+     {{swiperimg}}
       <Swiper>
         <SwiperItem v-for="(item,index) in swiperimg" :key="index" class="imgBox">
             <img :src="item" >
@@ -20,20 +21,36 @@ export default {
       default:[]
     },
   },
+  watch:{
+   swiperimg(val) {
+     console.log(123);
+      console.log("监听", val);
+      // this.editMsg = "---" + newnew + "---";
+    },
+  },
+  data () {
+    return {
+      SwiperArrar:[]
+    }
+  },
   created() {
+
   },
   data () {
     return {
     flag: true
     };
   },
-
   components: {
       Swiper,
       SwiperItem
   },
-
-  computed: {},
+  watch:{
+    change(){
+      return this.swiperimg;
+      console.log(123);
+    }
+  },
 
   methods: {}
 }
